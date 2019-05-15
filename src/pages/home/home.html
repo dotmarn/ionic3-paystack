@@ -1,14 +1,49 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Ionic Paystack
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <form [formGroup]="formPay" name="formPay">
+    <ion-item>
+      <ion-label stacked>
+        <ion-icon name="person" item-start></ion-icon>
+        Full Name
+      </ion-label>
+      <ion-input type="text" formControlName="fullname" [(ngModel)]="fullname"></ion-input>
+  </ion-item>
+
+    <ion-item>
+        <ion-label stacked>
+          <ion-icon name="mail" item-start></ion-icon>
+          Email
+        </ion-label>
+        <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>
+        <ion-icon name="call" item-start></ion-icon>
+        Phone
+      </ion-label>
+      <ion-input type="number" formControlName="phone"></ion-input>
+  </ion-item>
+
+    <ion-item>
+        <ion-label stacked>
+          <ion-icon name="card" item-start></ion-icon>
+          Amount
+        </ion-label>
+        <ion-input type="number" formControlName="amount" [(ngModel)]="amount"></ion-input>
+    </ion-item>
+    
+    <angular4-paystack [key]="public_key" [email]="email" [amount]="amount * 100" [ref]="random_id" [channels]="channels" (close)="paymentCancel()" (callback)="paymentDone($event)" [class]="'btn btn-primary'">
+            <button ion-button tappable style="width:100%" [disabled]="!formPay.valid"><ion-icon name="card"></ion-icon> Pay Now</button>
+    </angular4-paystack>
+        
+   
+</form>
 </ion-content>
